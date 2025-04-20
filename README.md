@@ -46,7 +46,7 @@ Visit http://localhost:5173 to use कaalपथ.
 ---
 
 # 🌍 Live Website
-Link --> 
+Link --> https://kaalpath.vercel.app/
 
 ---
 
