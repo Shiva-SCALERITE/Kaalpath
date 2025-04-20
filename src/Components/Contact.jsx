@@ -2,13 +2,14 @@ import React from 'react';
 
 const Contact = () => {
     return (
-        <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-700 text-white font-sans  p-4">
-            <div>
-                <p className=" text-cyan-400 font-semibold mb-6">
-                    contact@productifyai.tech
+        <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-700 text-white font-sans p-10">
+            <div className="mb-6">
+                <p className="text-2xl font-semibold text-cyan-400" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    Email us at: <span className="text-2xl font-bold text-white">contact@productifyai.tech</span>
                 </p>
             </div>
-            <div className="bg-gray-800 shadow-lg rounded-lg p-6 w-full max-w-lg">
+            <div className="ml-0 text-2xl font-semibold text-cyan-400" style={{ fontFamily: "'Poppins', sans-serif" }}>OR Fill the Form📝😄</div>
+            <div className="bg-gray-800 shadow-lg rounded-lg p-6 w-full max-w-lg mt-8">
                 <h1
                     className="text-3xl font-bold text-center mb-4 text-cyan-400"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
