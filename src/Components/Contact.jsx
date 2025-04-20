@@ -2,7 +2,7 @@ import React from 'react';
 
 const Contact = () => {
     return (
-        <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-700 text-white font-sans p-10">
+        <div className="min-h-[80vh] bg-gradient-to-b from-gray-900 via-gray-800 to-gray-700 text-white font-sans p-10 relative">
             <div className="mb-6">
                 <p className="text-2xl font-semibold text-cyan-400" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     Email us at: <span className="text-2xl font-bold text-white">contact@productifyai.tech</span>
@@ -97,6 +97,12 @@ const Contact = () => {
                     </button>
                 </form>
             </div>
+                <div className="absolute bottom-0 ml-120 mb-10">
+                    <img src="Logo.png" alt="Logo" className="w-40 h-40" />
+                </div>
+                {/* <div className="absolute bottom-0 ml-120 mb-1">
+                    <img src="signature.png" alt="Signature" className="w-40 h-40 ml-30" />
+                </div> */}
         </div>
     );
 };
