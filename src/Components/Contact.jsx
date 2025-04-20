@@ -2,15 +2,26 @@ import React from 'react';
 
 const Contact = () => {
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-            <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-lg">
-                <h1 className="text-2xl font-bold text-center mb-4">Contact Us</h1>
-                <p className="text-center text-gray-600 mb-6">
-                    Have a question, suggestion, or just want to connect? We're here to help!
-                </p>
-                <p className="text-center text-blue-500 font-semibold mb-6">
+        <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-700 text-white font-sans  p-4">
+            <div>
+                <p className=" text-cyan-400 font-semibold mb-6">
                     contact@productifyai.tech
                 </p>
+            </div>
+            <div className="bg-gray-800 shadow-lg rounded-lg p-6 w-full max-w-lg">
+                <h1
+                    className="text-3xl font-bold text-center mb-4 text-cyan-400"
+                    style={{ fontFamily: "'Poppins', sans-serif" }}
+                >
+                    Contact Us
+                </h1>
+                <p
+                    className="text-center text-gray-400 mb-6"
+                    style={{ fontFamily: "'Montserrat', sans-serif" }}
+                >
+                    Have a question, suggestion, or just want to connect? We're here to help!
+                </p>
+                
                 <form
                     className="space-y-4"
                     onSubmit={(e) => {
@@ -26,7 +37,7 @@ const Contact = () => {
                     <div>
                         <label
                             htmlFor="fullName"
-                            className="block text-sm font-medium text-gray-700"
+                            className="block text-sm font-medium text-gray-400"
                         >
                             Full Name
                         </label>
@@ -34,14 +45,14 @@ const Contact = () => {
                             type="text"
                             id="fullName"
                             name="fullName"
-                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                            className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-md focus:ring-cyan-400 focus:border-cyan-400 text-white"
                             required
                         />
                     </div>
                     <div>
                         <label
                             htmlFor="email"
-                            className="block text-sm font-medium text-gray-700"
+                            className="block text-sm font-medium text-gray-400"
                         >
                             Email
                         </label>
@@ -49,14 +60,14 @@ const Contact = () => {
                             type="email"
                             id="email"
                             name="email"
-                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                            className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-md focus:ring-cyan-400 focus:border-cyan-400 text-white"
                             required
                         />
                     </div>
                     <div>
                         <label
                             htmlFor="subject"
-                            className="block text-sm font-medium text-gray-700"
+                            className="block text-sm font-medium text-gray-400"
                         >
                             Subject (Optional)
                         </label>
@@ -64,13 +75,13 @@ const Contact = () => {
                             type="text"
                             id="subject"
                             name="subject"
-                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                            className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-md focus:ring-cyan-400 focus:border-cyan-400 text-white"
                         />
                     </div>
                     <div>
                         <label
                             htmlFor="message"
-                            className="block text-sm font-medium text-gray-700"
+                            className="block text-sm font-medium text-gray-400"
                         >
                             Message
                         </label>
@@ -78,13 +89,13 @@ const Contact = () => {
                             id="message"
                             name="message"
                             rows="5"
-                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                            className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-md focus:ring-cyan-400 focus:border-cyan-400 text-white"
                             required
                         ></textarea>
                     </div>
                     <button
                         type="submit"
-                        className="w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition duration-200"
+                        className="w-full py-2 px-4 bg-cyan-400 text-gray-900 font-bold rounded-md hover:bg-cyan-500 transition duration-200"
                     >
                         Submit
                     </button>
