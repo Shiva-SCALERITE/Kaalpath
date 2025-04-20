@@ -49,7 +49,7 @@ const Task = () => {
 
   return (
     <>
-      <div className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 p-5 min-h-[87.7vh] flex flex-col lg:flex-row gap-6 text-white">
+      <div className=" bg-cyan-400 from-gray-900 via-gray-800 to-gray-700 p-5 min-h-[87.7vh] flex flex-col lg:flex-row gap-6 text-white">
         <div className="w-full lg:w-8/4 bg-gray-800 shadow-lg rounded-3xl p-6 border-2 border-cyan-400">
           <h2 className="text-3xl font-extrabold text-cyan-400 mb-6">
             Plan Your Tasks
