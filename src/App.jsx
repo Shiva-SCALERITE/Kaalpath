@@ -20,7 +20,7 @@ function App() {
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <BrowserRouter>
-        <CopilotKit publicApiKey="ck_pub_4c543cf4dda33c77d6362cfc3ee5af30">
+        <CopilotKit publicApiKey="ck_pub_2b9aa045351ded4d8e0e12d46a96ed99">
           <Navbar
             isAuthenticated={isAuthenticated}
             setIsAuthenticated={setIsAuthenticated}

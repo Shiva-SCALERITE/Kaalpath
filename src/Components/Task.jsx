@@ -62,28 +62,28 @@ const Task = () => {
     value: todos,
   });
 
-  useCopilotAction({
-    name: "Add Task",
-    description: "Add a new task to the list",
-    parameters: [
-      {
-        name: "todoText",
-        type: "string",
-        description: "The text of the todo item to add",
-        required: true,
-      },
-    ],
-    handler: async ({ todoText }) => {
-      if (!todoText) return "No task provided.";
+  // useCopilotAction({
+  //   name: "Add Task",
+  //   description: "Add a new task to the list",
+  //   parameters: [
+  //     {
+  //       name: "todoText",
+  //       type: "string",
+  //       description: "The text of the todo item to add",
+  //       required: true,
+  //     },
+  //   ],
+  //   handler: async ({ todoText }) => {
+  //     if (!todoText) return "No task provided.";
 
-      setTodos((prev) => [
-        ...prev,
-        { todo: todoText, isEditing: false, isCompleted: false },
-      ]);
+  //     setTodos((prev) => [
+  //       ...prev,
+  //       { todo: todoText, isEditing: false, isCompleted: false },
+  //     ]);
 
-      return `Task "${todoText}" added.`;
-    },
-  });
+  //     return `Task "${todoText}" added.`;
+  //   },
+  // });
 
   const handleAdd = (taskText) => {
     if (taskText.trim() === "") return;
