@@ -8,7 +8,7 @@ const Contact = () => {
                     Email us at: <span className="text-2xl font-bold text-white">contact@productifyai.tech</span>
                 </p>
             </div>
-            <div className="ml-0 text-2xl font-semibold text-cyan-400" style={{ fontFamily: "'Poppins', sans-serif" }}>OR Fill the Form📝😄</div>
+            <div className="ml-0 text-2xl font-semibold text-cyan-400" style={{ fontFamily: "'Poppins', sans-serif" }}>OR Fill the Form📝😄 </div>
             <div className="bg-gray-800 shadow-lg rounded-lg p-6 w-full max-w-lg mt-8">
                 <h1
                     className="text-3xl font-bold text-center mb-4 text-cyan-400"
@@ -27,12 +27,7 @@ const Contact = () => {
                     className="space-y-4"
                     onSubmit={(e) => {
                         e.preventDefault();
-                        const isSuccess = Math.random() > 0.5; // Simulate success or failure
-                        if (isSuccess) {
-                            alert("Message sent successfully!");
-                        } else {
-                            alert("Something went wrong. Please try again.");
-                        }
+                        alert("Message sent successfully!");
                     }}
                 >
                     <div>

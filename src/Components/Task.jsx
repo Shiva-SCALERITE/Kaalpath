@@ -2,10 +2,59 @@ import React, { useState } from "react";
 import { useCopilotAction, useCopilotReadable } from "@copilotkit/react-core";
 import "@copilotkit/react-ui/styles.css";
 import CopilotChatPopup from "./CopilotChatPopup";
+import { jsPDF } from "jspdf";
 
 const Task = () => {
   const [value, setValue] = useState("");
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(() => {
+    const savedTodos = localStorage.getItem("todos");
+    return savedTodos ? JSON.parse(savedTodos) : [];
+  });
+  const [history, setHistory] = useState(() => {
+    const savedHistory = localStorage.getItem("history");
+    return savedHistory ? JSON.parse(savedHistory) : [];
+  });
+
+  // Save todos to local storage whenever they change
+  React.useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
+
+  // Save history to local storage whenever it changes
+  React.useEffect(() => {
+    localStorage.setItem("history", JSON.stringify(history));
+  }, [history]);
+
+  // Generate PDF and save to history when the day changes
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date();
+      const lastSavedDate = localStorage.getItem("lastSavedDate");
+      const today = now.toISOString().split("T")[0];
+
+      if (lastSavedDate !== today) {
+        if (todos.length > 0) {
+          const doc = new jsPDF();
+          doc.text("Task History", 10, 10);
+          todos.forEach((task, index) => {
+            doc.text(`${index + 1}. ${task.todo} - ${task.isCompleted ? "Completed" : "Pending"}`, 10, 20 + index * 10);
+          });
+          const pdfBlob = doc.output("blob");
+          const pdfUrl = URL.createObjectURL(pdfBlob);
+
+          setHistory((prev) => [
+            ...prev,
+            { date: lastSavedDate || today, url: pdfUrl },
+          ]);
+        }
+
+        localStorage.setItem("lastSavedDate", today);
+        setTodos([]);
+      }
+    }, 1000 * 60); // Check every minute
+
+    return () => clearInterval(interval);
+  }, [todos]);
 
   // Expose todos to Copilot
   useCopilotReadable({
@@ -13,7 +62,6 @@ const Task = () => {
     value: todos,
   });
 
-  // ✅ FIX: Place the add function INSIDE the action handler to avoid closure/state issues
   useCopilotAction({
     name: "Add Task",
     description: "Add a new task to the list",
@@ -28,7 +76,6 @@ const Task = () => {
     handler: async ({ todoText }) => {
       if (!todoText) return "No task provided.";
 
-      // ✅ Safe way to update state from async function
       setTodos((prev) => [
         ...prev,
         { todo: todoText, isEditing: false, isCompleted: false },
@@ -55,16 +102,21 @@ const Task = () => {
             Plan Your Tasks
           </h2>
           <div className="addtodo my-6">
-            <div className="flex items-center mb-5">
-              <label className="mr-4 font-semibold text-lg text-gray-300">
-                Choose Date:
-              </label>
-              <input
-                type="date"
-                className="bg-gray-700 border-2 border-gray-600 rounded-lg px-4 py-2 text-gray-300"
-                min={new Date().toISOString().split("T")[0]}
-                max={new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().split("T")[0]}
-              />
+            <div className="flex items-center justify-between mb-5">
+              <div className="flex items-center">
+                <label className="mr-4 font-semibold text-lg text-gray-300">
+                  Choose Date:
+                </label>
+                <input
+                  type="date"
+                  className="bg-gray-700 border-2 border-gray-600 rounded-lg px-4 py-2 text-gray-300"
+                  min={new Date().toISOString().split("T")[0]}
+                  max={new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().split("T")[0]}
+                />
+              </div>
+              <span className="text-gray-300 font-semibold">
+                Today: {new Date().toLocaleDateString()}
+              </span>
             </div>
             <h2 className="text-2xl font-bold text-gray-300">Add a Todo</h2>
             <div className="flex items-center mt-4">
@@ -153,24 +205,22 @@ const Task = () => {
         <div className="w-full bg-gray-800 shadow-lg rounded-3xl p-6 border-2 border-cyan-400">
           <h2 className="text-2xl font-extrabold text-cyan-400 mb-6">Task History (Last 10 Days)</h2>
           <div>
-            <label className="mr-4 font-semibold text-lg text-gray-300">Select Date:</label>
-            <select
-              className="bg-gray-700 border-2 border-gray-600 rounded-lg px-4 py-2 text-gray-300"
-              onChange={() => {
-                // future logic here
-              }}
-            >
-              <option value="yesterday">Yesterday</option>
-              {[...Array(9)].map((_, i) => {
-                const date = new Date();
-                date.setDate(date.getDate() - (i + 2));
-                return (
-                  <option key={i} value={date.toISOString().split("T")[0]}>
-                    {date.toDateString()}
-                  </option>
-                );
-              })}
-            </select>
+            {history.length === 0 ? (
+              <p className="text-center text-gray-400 italic">No history available.</p>
+            ) : (
+              history.map((entry, index) => (
+                <div key={index} className="history-item flex justify-between items-center bg-gray-700 shadow-md rounded-lg p-4 my-3 border border-gray-600">
+                  <span className="text-gray-300">{entry.date}</span>
+                  <a
+                    href={entry.url}
+                    download={`Task_History_${entry.date}.pdf`}
+                    className="bg-cyan-400 hover:bg-cyan-300 px-4 py-2 font-bold text-gray-900 rounded-lg"
+                  >
+                    Download
+                  </a>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>
