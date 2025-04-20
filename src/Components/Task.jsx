@@ -1,0 +1,183 @@
+import React, { useState } from "react";
+import { useCopilotAction, useCopilotReadable } from "@copilotkit/react-core";
+import "@copilotkit/react-ui/styles.css";
+import CopilotChatPopup from "./CopilotChatPopup";
+
+const Task = () => {
+  const [value, setValue] = useState("");
+  const [todos, setTodos] = useState([]);
+
+  // Expose todos to Copilot
+  useCopilotReadable({
+    description: "The current user's tasks",
+    value: todos,
+  });
+
+  // ✅ FIX: Place the add function INSIDE the action handler to avoid closure/state issues
+  useCopilotAction({
+    name: "Add Task",
+    description: "Add a new task to the list",
+    parameters: [
+      {
+        name: "todoText",
+        type: "string",
+        description: "The text of the todo item to add",
+        required: true,
+      },
+    ],
+    handler: async ({ todoText }) => {
+      if (!todoText) return "No task provided.";
+
+      // ✅ Safe way to update state from async function
+      setTodos((prev) => [
+        ...prev,
+        { todo: todoText, isEditing: false, isCompleted: false },
+      ]);
+
+      return `Task "${todoText}" added.`;
+    },
+  });
+
+  const handleAdd = (taskText) => {
+    if (taskText.trim() === "") return;
+    setTodos((prev) => [
+      ...prev,
+      { todo: taskText, isEditing: false, isCompleted: false },
+    ]);
+    setValue("");
+  };
+
+  return (
+    <>
+      <div className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 p-5 min-h-[87.7vh] flex flex-col lg:flex-row gap-6 text-white">
+        <div className="w-full lg:w-8/4 bg-gray-800 shadow-lg rounded-3xl p-6 border-2 border-cyan-400">
+          <h2 className="text-3xl font-extrabold text-cyan-400 mb-6">
+            Plan Your Tasks
+          </h2>
+          <div className="addtodo my-6">
+            <div className="flex items-center mb-5">
+              <label className="mr-4 font-semibold text-lg text-gray-300">
+                Choose Date:
+              </label>
+              <input
+                type="date"
+                className="bg-gray-700 border-2 border-gray-600 rounded-lg px-4 py-2 text-gray-300"
+                min={new Date().toISOString().split("T")[0]}
+                max={new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().split("T")[0]}
+              />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-300">Add a Todo</h2>
+            <div className="flex items-center mt-4">
+              <input
+                type="text"
+                placeholder="Add Your Task"
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                className="bg-gray-700 border-2 border-gray-600 rounded-lg w-2/3 px-4 py-2 text-gray-300"
+              />
+              <button
+                onClick={() => handleAdd(value)}
+                className="bg-cyan-400 hover:bg-cyan-300 px-5 py-2 font-bold text-gray-900 rounded-lg mx-4"
+              >
+                Add
+              </button>
+            </div>
+          </div>
+
+          <h2 className="text-2xl font-bold text-center text-gray-300 mt-8">
+            Your Tasks
+          </h2>
+          <div className="todos mt-6">
+            {todos.length === 0 ? (
+              <p className="text-center text-gray-400 italic">No tasks added yet.</p>
+            ) : (
+              todos.map((task, index) => (
+                <div key={index} className="todo flex justify-between items-center bg-gray-700 shadow-md rounded-lg p-4 my-3 border border-gray-600">
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={task.isCompleted}
+                      onChange={() => {
+                        const updated = [...todos];
+                        updated[index].isCompleted = !updated[index].isCompleted;
+                        setTodos(updated);
+                      }}
+                      className="mr-4 w-6 h-6 accent-cyan-400"
+                    />
+                    {task.isEditing ? (
+                      <input
+                        type="text"
+                        value={task.todo}
+                        onChange={(e) => {
+                          const updated = [...todos];
+                          updated[index].todo = e.target.value;
+                          setTodos(updated);
+                        }}
+                        className="bg-gray-700 border-2 border-gray-600 rounded-lg px-4 py-2 text-gray-300"
+                      />
+                    ) : (
+                      <span className={`text-lg ${task.isCompleted ? "line-through text-gray-500" : "text-gray-300"}`}>
+                        {task.todo}
+                      </span>
+                    )}
+                  </div>
+                  <div className="buttons flex">
+                    <button
+                      className="bg-blue-500 hover:bg-blue-400 px-4 py-2 font-bold text-gray-900 rounded-lg mx-1"
+                      onClick={() => {
+                        const updated = [...todos];
+                        if (task.isEditing && task.todo.trim() === "") return;
+                        updated[index].isEditing = !updated[index].isEditing;
+                        setTodos(updated);
+                      }}
+                    >
+                      {task.isEditing ? "Save" : "Edit"}
+                    </button>
+                    <button
+                      className="bg-red-500 hover:bg-red-400 px-4 py-2 font-bold text-gray-900 rounded-lg mx-1"
+                      onClick={() => {
+                        const updated = todos.filter((_, i) => i !== index);
+                        setTodos(updated);
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+
+        {/* Right Side - History */}
+        <div className="w-full bg-gray-800 shadow-lg rounded-3xl p-6 border-2 border-cyan-400">
+          <h2 className="text-2xl font-extrabold text-cyan-400 mb-6">Task History (Last 10 Days)</h2>
+          <div>
+            <label className="mr-4 font-semibold text-lg text-gray-300">Select Date:</label>
+            <select
+              className="bg-gray-700 border-2 border-gray-600 rounded-lg px-4 py-2 text-gray-300"
+              onChange={() => {
+                // future logic here
+              }}
+            >
+              <option value="yesterday">Yesterday</option>
+              {[...Array(9)].map((_, i) => {
+                const date = new Date();
+                date.setDate(date.getDate() - (i + 2));
+                return (
+                  <option key={i} value={date.toISOString().split("T")[0]}>
+                    {date.toDateString()}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <CopilotChatPopup />
+    </>
+  );
+};
+
+export default Task;
