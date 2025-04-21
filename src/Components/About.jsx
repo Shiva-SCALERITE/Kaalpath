@@ -15,13 +15,13 @@ const About = () => {
                     style={{ fontFamily: "'Montserrat', sans-serif" }}
                 >
                     Learn more about{" "}
-                    <span className="text-gray-900 font-bold">Kaalpath</span> - The Path of Time
+                    <span className="text-gray-900 font-bold">कaalपथ</span> - The Path of Time
                 </p>
             </header>
             <section className="text-center py-16 px-5">
                 <div className="max-w-4xl mx-auto bg-gray-800 p-8 rounded-lg shadow-lg space-y-6">
                     <p className="text-lg leading-relaxed">
-                        <span className="font-semibold text-cyan-400">Taskaro</span> is dedicated to helping you manage your tasks efficiently and stay organized.
+                        <span className="font-semibold text-cyan-400">कaalपथ</span> is dedicated to helping you manage your tasks efficiently and stay organized.
                     </p>
                     <p className="text-lg leading-relaxed">
                         Our mission is to provide a <span className="font-semibold text-cyan-400">simple</span> and <span className="font-semibold text-cyan-400">intuitive</span> platform that empowers individuals and teams to achieve their goals.
@@ -30,10 +30,10 @@ const About = () => {
                         We are committed to supporting your productivity journey with <span className="font-semibold text-cyan-400">innovative tools</span> and features.
                     </p>
                     <p className="text-lg leading-relaxed">
-                        At <span className="font-semibold text-cyan-400">Taskaro</span>, we believe that <span className="font-semibold text-cyan-400">time</span> is your most valuable resource, and our goal is to help you make the most of it.
+                        At <span className="font-semibold text-cyan-400">कaalपथ</span>, we believe that <span className="font-semibold text-cyan-400">time</span> is your most valuable resource, and our goal is to help you make the most of it.
                     </p>
                     <p className="text-lg leading-relaxed">
-                        Whether you're managing personal tasks, collaborating with a team, or planning long-term projects, <span className="font-semibold text-cyan-400">Taskaro</span> is here to simplify your workflow.
+                        Whether you're managing personal tasks, collaborating with a team, or planning long-term projects, <span className="font-semibold text-cyan-400">कaalपथ</span> is here to simplify your workflow.
                     </p>
                     <p className="text-lg leading-relaxed">
                         Join us on this journey to unlock your full potential and achieve success, <span className="font-semibold text-cyan-400">one task at a time</span>.
